@@ -42,6 +42,21 @@ async function refreshData(showMessage = true) {
   data.qrSession = results[5].error ? null : results[5].data;
   render();
   if (showMessage) showToast("Dados atualizados.");
+  notifyJustificationReviews();
+}
+
+function notifyJustificationReviews() {
+  if (ui.profile?.role !== "student") return;
+  const toNotify = data.justifications.filter(item => item.student_id === ui.profile.id && item.status !== "pending" && !item.notified_at);
+  if (!toNotify.length) return;
+  if (toNotify.length === 1) {
+    const item = toNotify[0];
+    showToast(`Sua justificativa de ${formatDate(item.absence_date)} foi ${item.status === "approved" ? "aprovada" : "recusada"}.`, item.status === "approved" ? "success" : "error");
+  } else {
+    showToast(`${toNotify.length} justificativas suas foram analisadas. Confira o histórico.`);
+  }
+  toNotify.forEach(item => { item.notified_at = new Date().toISOString(); });
+  backend.rpc("mark_justifications_seen").catch(console.error);
 }
 
 function subscribeRealtime() {

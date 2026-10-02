@@ -62,9 +62,12 @@ create table if not exists public.justifications (
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
   reviewed_by uuid references public.profiles(id),
   reviewed_at timestamptz,
+  notified_at timestamptz,
   created_at timestamptz not null default now(),
   unique (student_id, absence_date)
 );
+
+alter table public.justifications add column if not exists notified_at timestamptz;
 
 create table if not exists public.qr_sessions (
   id uuid primary key default gen_random_uuid(),
@@ -322,6 +325,19 @@ begin
 end;
 $$;
 
+create or replace function public.mark_justifications_seen()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update public.justifications
+  set notified_at = now()
+  where student_id = auth.uid() and status <> 'pending' and notified_at is null;
+end;
+$$;
+
 alter table public.profiles enable row level security;
 alter table public.meal_confirmations enable row level security;
 alter table public.attendance enable row level security;
@@ -403,6 +419,7 @@ revoke all on function public.generate_daily_qr() from public;
 revoke all on function public.register_qr_attendance(text) from public;
 revoke all on function public.register_manual_attendance(text) from public;
 revoke all on function public.review_justification(uuid, text) from public;
+revoke all on function public.mark_justifications_seen() from public;
 
 grant execute on function public.bootstrap_first_direction() to authenticated;
 grant execute on function public.approve_staff(uuid, text) to authenticated;
@@ -410,6 +427,7 @@ grant execute on function public.generate_daily_qr() to authenticated;
 grant execute on function public.register_qr_attendance(text) to authenticated;
 grant execute on function public.register_manual_attendance(text) to authenticated;
 grant execute on function public.review_justification(uuid, text) to authenticated;
+grant execute on function public.mark_justifications_seen() to authenticated;
 
 insert into storage.buckets (id, name, public)
 values ('justifications', 'justifications', false)
