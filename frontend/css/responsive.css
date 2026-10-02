@@ -1,0 +1,237 @@
+@media (max-width: 1040px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 850px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    width: 260px;
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    z-index: 25;
+    inset: 0;
+    display: block;
+    background: rgba(3, 10, 7, 0.55);
+  }
+
+  .main-wrap {
+    grid-column: 1;
+  }
+
+  .mobile-menu-button {
+    display: inline-grid;
+  }
+
+  .topbar-school {
+    margin-right: auto;
+    margin-left: 11px;
+  }
+
+  .student-grid,
+  .qr-control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .class-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .login-topbar {
+    width: min(100% - 28px, 520px);
+  }
+
+  .login-stage {
+    padding: 22px 14px 48px;
+  }
+
+  .login-card {
+    padding: 22px;
+  }
+
+  .topbar {
+    min-height: 61px;
+    padding: 0 14px;
+  }
+
+  .topbar-school {
+    display: none;
+  }
+
+  .content {
+    padding: 22px 14px 90px;
+  }
+
+  .mobile-nav {
+    position: fixed;
+    z-index: 24;
+    right: 9px;
+    bottom: 9px;
+    left: 9px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    min-height: 62px;
+    padding: 5px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .mobile-nav button {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 3px;
+    border-radius: 11px;
+    color: var(--muted);
+    background: transparent;
+    font-size: 7px;
+    font-weight: 650;
+  }
+
+  .mobile-nav button span:first-child {
+    font-size: 15px;
+  }
+
+  .mobile-nav button.active {
+    color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  .two-columns,
+  .attendance-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .student-qr-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .student-qr-card > .button,
+  .student-qr-card > .badge {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+  }
+
+  .page-heading h1 {
+    font-size: 25px;
+  }
+
+  .page-heading > .button {
+    min-width: 40px;
+    padding: 9px 11px;
+  }
+
+  .document-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .camera-frame,
+  .camera-frame video {
+    min-height: 280px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-topbar .brand {
+    width: 190px;
+    height: 50px;
+  }
+
+  .school-symbol.school-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .stats-grid,
+  .class-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-row {
+    grid-template-columns: 61px minmax(0, 1fr) auto;
+  }
+
+  .menu-content {
+    padding: 12px;
+  }
+
+  .person-row,
+  .document-row {
+    flex-wrap: wrap;
+  }
+
+  .person-row .button,
+  .document-row .button {
+    margin-left: 47px;
+  }
+
+  .paper {
+    min-height: 350px;
+    padding: 23px;
+  }
+
+  .bar-chart {
+    gap: 6px;
+    padding-inline: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .qr-print-card,
+  .qr-print-card * {
+    visibility: visible !important;
+  }
+
+  .qr-print-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .qr-print-actions,
+  .qr-print-card .pill {
+    display: none !important;
+  }
+
+  .school-qr {
+    width: 420px;
+    max-width: 80vw;
+    border: 0;
+  }
+}

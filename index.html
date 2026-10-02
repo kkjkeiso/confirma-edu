@@ -9,18 +9,32 @@
       content="ConfirmaEdu — controle compartilhado de refeições da Escola Estadual Professor Antônio Dantas."
     />
     <title>ConfirmaEdu</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="supabase.js" defer></script>
-    <script src="qrcode.js" defer></script>
-    <script src="jsQR.js" defer></script>
-    <script src="config.js" defer></script>
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="frontend/css/global.css" />
+    <link rel="stylesheet" href="frontend/css/auth.css" />
+    <link rel="stylesheet" href="frontend/css/dashboard.css" />
+    <link rel="stylesheet" href="frontend/css/responsive.css" />
+    <script src="frontend/js/vendor/supabase.js" defer></script>
+    <script src="frontend/js/vendor/qrcode.js" defer></script>
+    <script src="frontend/js/vendor/jsQR.js" defer></script>
+    <script src="frontend/js/config.js" defer></script>
+    <script src="frontend/js/state.js" defer></script>
+    <script src="frontend/js/utils.js" defer></script>
+    <script src="frontend/js/shared.js" defer></script>
+    <script src="frontend/js/auth-views.js" defer></script>
+    <script src="frontend/js/student-views.js" defer></script>
+    <script src="frontend/js/canteen-views.js" defer></script>
+    <script src="frontend/js/direction-views.js" defer></script>
+    <script src="frontend/js/modals.js" defer></script>
+    <script src="frontend/js/qr-scanner.js" defer></script>
+    <script src="frontend/js/data.js" defer></script>
+    <script src="frontend/js/events.js" defer></script>
+    <script src="frontend/js/main.js" defer></script>
   </head>
   <body>
     <div id="app" aria-live="polite">
       <main class="loading-screen">
         <div class="brand brand-loading">
-          <img class="brand-logo" src="assets/logo.webp" alt="ConfirmaEdu" />
+          <img class="brand-logo" src="frontend/assets/logo.webp" alt="ConfirmaEdu" />
         </div>
         <strong>Carregando o ConfirmaEdu…</strong>
       </main>
