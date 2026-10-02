@@ -1,7 +1,7 @@
 "use strict";
 
 function modalShell(title, content, wide = false) {
-  return renderTemplate("tpl-modal-shell", { title: escapeHTML(title), content }, { wide: wide ? "wide" : "" });
+  return `<div class="modal-layer" role="dialog" aria-modal="true" aria-label="${escapeHTML(title)}"><button class="modal-backdrop" data-action="close-modal" aria-label="Fechar janela"></button><section class="modal ${wide ? "wide" : ""}"><header class="modal-head"><h2>${escapeHTML(title)}</h2><button class="icon-button" data-action="close-modal" aria-label="Fechar">×</button></header><div class="modal-body">${content}</div></section></div>`;
 }
 
 function justificationModal(day) {

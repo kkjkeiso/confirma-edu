@@ -1,13 +1,6 @@
 "use strict";
 
 async function boot() {
-  await loadTemplates([
-    "frontend/html/login.html",
-    "frontend/html/shared.html",
-    "frontend/html/student.html",
-    "frontend/html/canteen.html",
-    "frontend/html/direction.html",
-  ]);
   applyTheme();
   if (!isConfigured) {
     ui.booting = false;
