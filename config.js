@@ -1,4 +1,4 @@
 window.CONFIRMAEDU_CONFIG = {
-  SUPABASE_URL: "https://ettocqjrtgeelfsiovql.supabase.co",
-  SUPABASE_KEY: "sb_publishable_hQPDYq4YqJp5IwZoZaJuJQ_adJW2_bW",
+  SUPABASE_URL: "https://zgjhtqdnkijcrnouyycb.supabase.co",
+  SUPABASE_KEY: "sb_publishable_Abn5wFlsFLKumEG8dAy7nQ_hKhDaXVA",
 };
