@@ -187,6 +187,25 @@ begin
 end;
 $$;
 
+create or replace function public.remove_student(p_student_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if public.current_app_role() <> 'direction' then
+    raise exception 'Somente a direção pode remover alunos.';
+  end if;
+
+  delete from public.profiles where id = p_student_id and role = 'student';
+
+  if not found then
+    raise exception 'Aluno não encontrado.';
+  end if;
+end;
+$$;
+
 create or replace function public.generate_daily_qr()
 returns text
 language plpgsql
@@ -415,6 +434,7 @@ grant usage, select on all sequences in schema public to authenticated;
 
 revoke all on function public.bootstrap_first_direction() from public;
 revoke all on function public.approve_staff(uuid, text) from public;
+revoke all on function public.remove_student(uuid) from public;
 revoke all on function public.generate_daily_qr() from public;
 revoke all on function public.register_qr_attendance(text) from public;
 revoke all on function public.register_manual_attendance(text) from public;
@@ -423,6 +443,7 @@ revoke all on function public.mark_justifications_seen() from public;
 
 grant execute on function public.bootstrap_first_direction() to authenticated;
 grant execute on function public.approve_staff(uuid, text) to authenticated;
+grant execute on function public.remove_student(uuid) to authenticated;
 grant execute on function public.generate_daily_qr() to authenticated;
 grant execute on function public.register_qr_attendance(text) to authenticated;
 grant execute on function public.register_manual_attendance(text) to authenticated;

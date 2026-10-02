@@ -21,6 +21,7 @@ document.addEventListener("click", async event => {
   if (action === "navigate") { stopQrScanner(); ui.view = button.dataset.view; ui.mobileMenu = false; ui.search = ""; render(); return; }
   if (action === "close-modal") { stopQrScanner(); ui.modal = null; render(); return; }
   if (action === "print" || action === "print-qr") { window.print(); return; }
+  if (action === "select-report-period") { ui.reportPeriod = button.dataset.period; render(); return; }
 
   try {
     if (action === "logout") {
@@ -90,6 +91,16 @@ document.addEventListener("click", async event => {
       return;
     }
     if (action === "export-csv") { exportCSV(); return; }
+    if (action === "remove-student") {
+      const confirmed = window.confirm("Remover este aluno? Todo o histórico de confirmações e presenças dele será apagado.");
+      if (!confirmed) return;
+      setButtonBusy(button, true);
+      const { error } = await backend.rpc("remove_student", { p_student_id: button.dataset.id });
+      if (error) throw error;
+      await refreshData(false);
+      showToast("Aluno removido.");
+      return;
+    }
   } catch (error) {
     console.error(error);
     showToast(error.message || "Não foi possível concluir a ação.", "error");

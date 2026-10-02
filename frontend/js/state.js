@@ -39,6 +39,7 @@ const NAVIGATION = {
     { id: "inicio", icon: "⌂", label: "Visão geral" },
     { id: "ausencias", icon: "!", label: "Ausências" },
     { id: "justificativas", icon: "▤", label: "Justificativas" },
+    { id: "turmas", icon: "▦", label: "Turmas" },
     { id: "cardapio", icon: "☷", label: "Cardápio" },
     { id: "acessos", icon: "♟", label: "Acessos" },
     { id: "relatorios", icon: "▥", label: "Relatórios" },
@@ -71,6 +72,7 @@ const ui = {
   modal: null,
   mobileMenu: false,
   search: "",
+  reportPeriod: "week",
   theme: localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light",
 };
 
@@ -96,3 +98,5 @@ let qrFrameId = null;
 let qrScanning = false;
 
 let qrLastScan = 0;
+
+const reportsCache = { week: null, month: null, year: null };

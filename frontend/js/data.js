@@ -21,6 +21,7 @@ async function loadCurrentAccount() {
 
 async function refreshData(showMessage = true) {
   if (!backend || !ui.profile || ui.profile.role === "pending") return;
+  if (showMessage) { reportsCache.week = null; reportsCache.month = null; reportsCache.year = null; }
   const start = firstDayRange(45);
   const end = dateKey();
   const requests = [
@@ -43,6 +44,23 @@ async function refreshData(showMessage = true) {
   render();
   if (showMessage) showToast("Dados atualizados.");
   notifyJustificationReviews();
+}
+
+async function loadReportPeriod(period) {
+  const buckets = reportBuckets(period);
+  const start = buckets[0].start;
+  const end = buckets[buckets.length - 1].end;
+  const [confirmationsResult, attendanceResult] = await Promise.all([
+    backend.from("meal_confirmations").select("meal_date, will_eat").gte("meal_date", start).lte("meal_date", end),
+    backend.from("attendance").select("meal_date").gte("meal_date", start).lte("meal_date", end),
+  ]);
+  if (confirmationsResult.error || attendanceResult.error) {
+    reportsCache[period] = null;
+    showToast("Não foi possível carregar o relatório.", "error");
+    return;
+  }
+  reportsCache[period] = { confirmations: confirmationsResult.data || [], attendance: attendanceResult.data || [] };
+  if (ui.view === "relatorios" && ui.reportPeriod === period) render();
 }
 
 function notifyJustificationReviews() {
