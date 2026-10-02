@@ -4,15 +4,14 @@
 
 O ConfirmaEdu é o sistema de controle de refeições da Escola Estadual Professor Antônio Dantas (EEPAD), em Natal/RN. O aluno confirma todo dia se vai almoçar e, na hora da refeição, registra a própria presença apontando a câmera do celular para um QR Code gerado pela cantina — a cantina também pode registrar manualmente pela matrícula, para quem não tem como escanear. A direção acompanha em tempo real quem confirmou e não apareceu, analisa as justificativas de falta enviadas em PDF pelos alunos e libera o acesso de novos funcionários da cantina e da própria direção. A cantina e a direção também mantêm o cardápio da semana, visível para todo mundo. O cadastro é feito só com matrícula (sem precisar de e-mail de verdade), a primeira pessoa a se cadastrar como direção assume automaticamente esse papel no sistema, e todas as telas têm tema claro e escuro.
 
-Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o único ponto de entrada é `frontend/html/index.html`, e o resto do front-end vive ao lado dele em `frontend/`: os estilos em `frontend/css/`, divididos por responsabilidade (tokens e componentes compartilhados, telas de login, telas internas e regras responsivas), e a lógica do app em `frontend/js/`, dividida em módulos pequenos (estado, utilitários, telas por papel, modais, leitor de QR Code, dados e eventos) carregados em sequência — sem bundler, só `<script defer>`. O backend é o Supabase: Postgres com Row Level Security para cada papel (aluno, cantina, direção), autenticação, Realtime para atualizar os painéis sozinhos quando alguém confirma uma refeição ou registra presença, e Storage para os PDFs de justificativa. Todo o schema do banco — tabelas, funções, políticas de segurança e o bucket de arquivos — está em `backend/database.sql`, pensado para ser colado de uma vez no SQL Editor do Supabase. As bibliotecas de QR Code (geração e leitura pela câmera) e o cliente do Supabase ficam vendorizadas localmente em `frontend/js/vendor/` em vez de carregadas por CDN, então o projeto inteiro funciona abrindo os arquivos direto, sem build e sem instalar nada.
+Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o `index.html` na raiz é o único ponto de entrada, e todo o front-end vive em `frontend/`: os estilos em `frontend/css/`, divididos por responsabilidade (tokens e componentes compartilhados, telas de login, telas internas e regras responsivas), e a lógica do app em `frontend/js/`, dividida em módulos pequenos (estado, utilitários, telas por papel, modais, leitor de QR Code, dados e eventos) carregados em sequência — sem bundler, só `<script defer>`. O backend é o Supabase: Postgres com Row Level Security para cada papel (aluno, cantina, direção), autenticação, Realtime para atualizar os painéis sozinhos quando alguém confirma uma refeição ou registra presença, e Storage para os PDFs de justificativa. Todo o schema do banco — tabelas, funções, políticas de segurança e o bucket de arquivos — está em `backend/database.sql`, pensado para ser colado de uma vez no SQL Editor do Supabase. As bibliotecas de QR Code (geração e leitura pela câmera) e o cliente do Supabase ficam vendorizadas localmente em `frontend/js/vendor/` em vez de carregadas por CDN, então o projeto inteiro funciona abrindo os arquivos direto, sem build e sem instalar nada.
 
 ```
 .
+├── index.html                       Ponto de entrada — carrega o app
 ├── backend/
 │   └── database.sql                 Schema completo do Supabase (tabelas, RLS, functions, storage)
 ├── frontend/
-│   ├── html/
-│   │   └── index.html               Ponto de entrada — carrega o app
 │   ├── assets/
 │   │   ├── logo.webp                Logo do ConfirmaEdu
 │   │   └── brasao-escola.webp       Brasão da Escola Estadual Professor Antônio Dantas
@@ -55,7 +54,7 @@ Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o �
      SUPABASE_KEY: "sua-chave-publica-aqui",
    };
    ```
-5. Abra o `frontend/html/index.html` (ou publique os arquivos em qualquer host estático) e cadastre-se escolhendo o perfil **Direção**. Como ainda não existe nenhuma direção cadastrada, o próprio sistema libera esse primeiro acesso automaticamente. A partir daí, use o painel **Acessos** para aprovar a cantina e os próximos funcionários.
+5. Abra o `index.html` (ou publique os arquivos em qualquer host estático) e cadastre-se escolhendo o perfil **Direção**. Como ainda não existe nenhuma direção cadastrada, o próprio sistema libera esse primeiro acesso automaticamente. A partir daí, use o painel **Acessos** para aprovar a cantina e os próximos funcionários.
 
 Essa chave do Supabase é pública por natureza, feita para rodar no navegador — a segurança de verdade está nas políticas de RLS criadas pelo `backend/database.sql`.
 
@@ -69,15 +68,14 @@ O código é de uso exclusivo da Escola Estadual Professor Antônio Dantas e é 
 
 ConfirmaEdu is the meal-control system of Escola Estadual Professor Antônio Dantas (EEPAD), a public school in Natal, Brazil. Every day, students confirm whether they will have lunch, and at mealtime they check themselves in by pointing their phone's camera at a QR Code generated by the canteen — the canteen staff can also check a student in manually by registration number, for anyone who cannot scan. The school's direction tracks in real time who confirmed but never showed up, reviews the absence justifications students upload as PDFs, and approves access for new canteen and direction staff. The canteen and direction also keep the weekly menu up to date, visible to everyone. Sign-up only needs a registration number (no real e-mail required), the first person to sign up as direction automatically becomes the school's administrator in the system, and every screen has a light and a dark theme.
 
-Everything is plain HTML, CSS and JavaScript, with no framework and no build step — the single entry point is `frontend/html/index.html`, and the rest of the front-end lives alongside it under `frontend/`: styles in `frontend/css/`, split by responsibility (tokens and shared components, auth screens, dashboard screens and responsive rules), and the app logic in `frontend/js/`, split into small modules (state, utilities, per-role screens, modals, QR reader, data and events) loaded in sequence — no bundler, just `<script defer>`. The backend is Supabase: Postgres with Row Level Security per role (student, canteen, direction), authentication, Realtime to refresh the dashboards on their own whenever someone confirms a meal or checks in, and Storage for the justification PDFs. The whole database schema — tables, functions, security policies and the storage bucket — lives in `backend/database.sql`, meant to be pasted at once into Supabase's SQL Editor. The QR Code libraries (generating and reading via the camera) and the Supabase client are vendored locally under `frontend/js/vendor/` instead of loaded from a CDN, so the whole project runs by opening the files directly, with no build and nothing to install.
+Everything is plain HTML, CSS and JavaScript, with no framework and no build step — the root `index.html` is the single entry point, and the whole front-end lives under `frontend/`: styles in `frontend/css/`, split by responsibility (tokens and shared components, auth screens, dashboard screens and responsive rules), and the app logic in `frontend/js/`, split into small modules (state, utilities, per-role screens, modals, QR reader, data and events) loaded in sequence — no bundler, just `<script defer>`. The backend is Supabase: Postgres with Row Level Security per role (student, canteen, direction), authentication, Realtime to refresh the dashboards on their own whenever someone confirms a meal or checks in, and Storage for the justification PDFs. The whole database schema — tables, functions, security policies and the storage bucket — lives in `backend/database.sql`, meant to be pasted at once into Supabase's SQL Editor. The QR Code libraries (generating and reading via the camera) and the Supabase client are vendored locally under `frontend/js/vendor/` instead of loaded from a CDN, so the whole project runs by opening the files directly, with no build and nothing to install.
 
 ```
 .
+├── index.html                       Entry point — loads the app
 ├── backend/
 │   └── database.sql                 Full Supabase schema (tables, RLS, functions, storage)
 ├── frontend/
-│   ├── html/
-│   │   └── index.html               Entry point — loads the app
 │   ├── assets/
 │   │   ├── logo.webp                ConfirmaEdu logo
 │   │   └── brasao-escola.webp       Escola Estadual Professor Antônio Dantas crest
@@ -120,7 +118,7 @@ Everything is plain HTML, CSS and JavaScript, with no framework and no build ste
      SUPABASE_KEY: "your-public-key-here",
    };
    ```
-5. Open `frontend/html/index.html` (or publish the files on any static host) and sign up choosing the **Direção** (direction) role. Since no direction account exists yet, the system grants that first access automatically. From there, use the **Acessos** (access) panel to approve the canteen and the next staff accounts.
+5. Open `index.html` (or publish the files on any static host) and sign up choosing the **Direção** (direction) role. Since no direction account exists yet, the system grants that first access automatically. From there, use the **Acessos** (access) panel to approve the canteen and the next staff accounts.
 
 That Supabase key is public by design, meant to run in the browser — the real security lives in the RLS policies created by `backend/database.sql`.
 
