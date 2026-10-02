@@ -480,6 +480,24 @@ using (
   and public.current_app_role() = 'student'
 );
 
+create or replace function public.delete_justification_file()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from storage.objects
+  where bucket_id = 'justifications' and name = old.file_path;
+  return old;
+end;
+$$;
+
+drop trigger if exists on_justification_deleted on public.justifications;
+create trigger on_justification_deleted
+  before delete on public.justifications
+  for each row execute procedure public.delete_justification_file();
+
 do $$
 declare
   table_name text;
