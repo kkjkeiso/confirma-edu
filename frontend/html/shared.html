@@ -1,0 +1,44 @@
+<template id="tpl-app-shell">
+  <div class="app-shell">
+    <aside class="sidebar" data-slot-class="sidebar-open">
+      <div data-slot="brand"></div>
+      <div class="profile-box" data-slot="profile"></div>
+      <nav class="side-nav" aria-label="Navegação principal" data-slot="nav"></nav>
+      <button class="logout-button" data-action="logout">↪ Sair</button>
+    </aside>
+    <!--slot:overlay-->
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="icon-button mobile-menu-button" data-action="open-mobile-menu" aria-label="Abrir menu">☰</button>
+        <span class="topbar-school">▦ EE Professor Antônio Dantas</span>
+        <div class="topbar-actions">
+          <button class="icon-button" data-action="refresh-data" title="Atualizar dados" aria-label="Atualizar dados">↻</button>
+          <div data-slot="theme"></div>
+        </div>
+      </header>
+      <main class="content" data-slot="content"></main>
+    </div>
+    <nav class="mobile-nav" aria-label="Navegação móvel" data-slot="mobile-nav"></nav>
+    <!--slot:modal-->
+  </div>
+</template>
+
+<template id="tpl-menu">
+  <div class="page-stack">
+    <div data-slot="heading"></div>
+    <section class="menu-list" data-slot="rows"></section>
+  </div>
+</template>
+
+<template id="tpl-modal-shell">
+  <div class="modal-layer" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-backdrop" data-action="close-modal" aria-label="Fechar janela"></button>
+    <section class="modal" data-slot-class="wide">
+      <header class="modal-head">
+        <h2 id="modal-title" data-slot="title"></h2>
+        <button class="icon-button" data-action="close-modal" aria-label="Fechar">×</button>
+      </header>
+      <div class="modal-body" data-slot="content"></div>
+    </section>
+  </div>
+</template>

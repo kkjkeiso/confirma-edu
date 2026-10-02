@@ -48,7 +48,7 @@ async function loadTemplates(paths) {
   }
 }
 
-function renderTemplate(id, slots = {}) {
+function renderTemplate(id, slots = {}, classes = {}, raw = {}) {
   const template = document.getElementById(id);
   const node = template.content.cloneNode(true);
   for (const [name, html] of Object.entries(slots)) {
@@ -57,9 +57,19 @@ function renderTemplate(id, slots = {}) {
     target.innerHTML = html;
     target.removeAttribute("data-slot");
   }
+  for (const [name, className] of Object.entries(classes)) {
+    const target = node.querySelector(`[data-slot-class="${name}"]`);
+    if (!target) continue;
+    if (className) target.classList.add(className);
+    target.removeAttribute("data-slot-class");
+  }
   const wrapper = document.createElement("div");
   wrapper.appendChild(node);
-  return wrapper.innerHTML;
+  let html = wrapper.innerHTML;
+  for (const [name, value] of Object.entries(raw)) {
+    html = html.split(`<!--slot:${name}-->`).join(value);
+  }
+  return html;
 }
 
 function render() {
@@ -89,7 +99,21 @@ function profileById(id) {
 function renderApp() {
   const user = currentUser();
   const nav = NAVIGATION[user.role] || [];
-  return `<div class="app-shell"><aside class="sidebar ${ui.mobileMenu ? "open" : ""}">${brand()}<div class="profile-box"><span class="avatar">${initialsFromName(user.full_name)}</span><div><strong>${escapeHTML(user.full_name)}</strong><small>${escapeHTML(user.classroom || roleLabel(user.role))}</small></div></div><nav class="side-nav" aria-label="Navegação principal">${nav.map(item => navButton(item)).join("")}</nav><button class="logout-button" data-action="logout">↪ Sair</button></aside>${ui.mobileMenu ? `<button class="sidebar-overlay" data-action="close-mobile-menu" aria-label="Fechar menu"></button>` : ""}<div class="main-wrap"><header class="topbar"><button class="icon-button mobile-menu-button" data-action="open-mobile-menu" aria-label="Abrir menu">☰</button><span class="topbar-school">▦ EE Professor Antônio Dantas</span><div class="topbar-actions"><button class="icon-button" data-action="refresh-data" title="Atualizar dados" aria-label="Atualizar dados">↻</button>${themeButton()}</div></header><main class="content">${renderCurrentView()}</main></div><nav class="mobile-nav" aria-label="Navegação móvel">${nav.map(item => navButton(item, true)).join("")}</nav>${renderModal()}</div>`;
+  const profile = `<span class="avatar">${initialsFromName(user.full_name)}</span><div><strong>${escapeHTML(user.full_name)}</strong><small>${escapeHTML(user.classroom || roleLabel(user.role))}</small></div>`;
+  const overlay = ui.mobileMenu ? `<button class="sidebar-overlay" data-action="close-mobile-menu" aria-label="Fechar menu"></button>` : "";
+  return renderTemplate(
+    "tpl-app-shell",
+    {
+      brand: brand(),
+      profile,
+      nav: nav.map(item => navButton(item)).join(""),
+      theme: themeButton(),
+      content: renderCurrentView(),
+      "mobile-nav": nav.map(item => navButton(item, true)).join(""),
+    },
+    { "sidebar-open": ui.mobileMenu ? "open" : "" },
+    { overlay, modal: renderModal() }
+  );
 }
 
 function navButton(item, mobile = false) {
@@ -135,10 +159,14 @@ function todayMenuCard() {
 function renderMenu(editable) {
   const days = weekDates();
   const dayShort = ["SEG", "TER", "QUA", "QUI", "SEX"];
-  return `<div class="page-stack">${heading(editable ? "Planejamento" : "Área do aluno", "Cardápio semanal", `Semana de ${formatDate(days[0], { day: "2-digit", month: "2-digit" })} a ${formatDate(days[4], { day: "2-digit", month: "2-digit" })}.`)}<section class="menu-list">${days.map((day, index) => {
+  const rows = days.map((day, index) => {
     const item = menuForDate(day);
     return `<article class="menu-row ${day === dateKey() ? "today" : ""}"><div class="menu-date"><strong>${dayShort[index]}</strong><small>${formatDate(day, { day: "2-digit", month: "2-digit" })}</small></div><div class="menu-content"><span>${new Intl.DateTimeFormat("pt-BR", { weekday: "long", timeZone: "America/Fortaleza" }).format(parseDate(day))}${day === dateKey() ? " • Hoje" : ""}</span>${item ? `<h3>${escapeHTML(item.main_dish)}</h3><p>${escapeHTML(item.sides || "Sem acompanhamento informado")}</p><div class="menu-meta">♧ ${escapeHTML(item.dessert || "Sobremesa não informada")}</div>` : `<h3>Refeição ainda não informada</h3><p>Aguardando o planejamento da escola.</p>`}</div>${editable ? `<button class="icon-button edit-button" data-action="edit-menu" data-date="${day}" aria-label="Editar cardápio">✎</button>` : ""}</article>`;
-  }).join("")}</section></div>`;
+  }).join("");
+  return renderTemplate("tpl-menu", {
+    heading: heading(editable ? "Planejamento" : "Área do aluno", "Cardápio semanal", `Semana de ${formatDate(days[0], { day: "2-digit", month: "2-digit" })} a ${formatDate(days[4], { day: "2-digit", month: "2-digit" })}.`),
+    rows,
+  });
 }
 
 function statusLabel(value) {
