@@ -58,7 +58,7 @@ Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o `
 
 Essa chave do Supabase é pública por natureza, feita para rodar no navegador — a segurança de verdade está nas políticas de RLS criadas pelo `backend/database.sql`.
 
-O código é de uso exclusivo da Escola Estadual Professor Antônio Dantas e é proprietário — os termos completos estão em `LICENSE.md`. Na prática, o código-fonte pode ser visualizado para fins de estudo, mas nenhuma parte dele (código, textos, imagens ou identidade visual) pode ser copiada, redistribuída ou reutilizada sem autorização prévia por escrito.
+O código foi desenvolvido por Maria Isabel da Costa Paiva, Monalysa Emilly Caetano e Patrickson Adriel da Silva Moura Freitas, exclusivamente para a Escola Estadual Professor Antônio Dantas, e é proprietário — os termos completos estão em `LICENSE.md`. Na prática, o código-fonte pode ser visualizado para fins de estudo, mas nenhuma parte dele (código, textos, imagens ou identidade visual) pode ser copiada, redistribuída ou reutilizada sem autorização prévia por escrito.
 
 ---
 
@@ -122,4 +122,4 @@ Everything is plain HTML, CSS and JavaScript, with no framework and no build ste
 
 That Supabase key is public by design, meant to run in the browser — the real security lives in the RLS policies created by `backend/database.sql`.
 
-The code is for the exclusive use of Escola Estadual Professor Antônio Dantas and is proprietary — the full terms are in `LICENSE.md`. In practice, the source can be viewed for study purposes, but no part of it (code, texts, images or visual identity) may be copied, redistributed or reused without prior written permission.
+The code was developed by Maria Isabel da Costa Paiva, Monalysa Emilly Caetano and Patrickson Adriel da Silva Moura Freitas, exclusively for Escola Estadual Professor Antônio Dantas, and is proprietary — the full terms are in `LICENSE.md`. In practice, the source can be viewed for study purposes, but no part of it (code, texts, images or visual identity) may be copied, redistributed or reused without prior written permission.

@@ -4,7 +4,7 @@
 
 Copyright © 2026 Escola Estadual Professor Antônio Dantas. Todos os direitos reservados.
 
-**1. Titularidade.** O presente projeto — compreendendo código-fonte, textos, imagens, marcas e identidade visual — é de uso exclusivo da Escola Estadual Professor Antônio Dantas, a quem pertencem os direitos de exploração, nos termos da Lei nº 9.609/1998 (Lei do Software) e da Lei nº 9.610/1998 (Lei de Direitos Autorais).
+**1. Titularidade.** O presente projeto — compreendendo código-fonte, textos, imagens, marcas e identidade visual — foi desenvolvido por Maria Isabel da Costa Paiva, Monalysa Emilly Caetano e Patrickson Adriel da Silva Moura Freitas para uso exclusivo da Escola Estadual Professor Antônio Dantas, a quem pertencem os direitos de exploração, nos termos da Lei nº 9.609/1998 (Lei do Software) e da Lei nº 9.610/1998 (Lei de Direitos Autorais). Os desenvolvedores mantêm o direito de serem identificados como autores da obra.
 
 **2. Restrições.** Salvo autorização prévia e por escrito da titular, é vedado a terceiros copiar, reproduzir, modificar, distribuir, sublicenciar, publicar, vender ou de qualquer forma reutilizar, total ou parcialmente, o conteúdo deste projeto.
 
@@ -22,7 +22,7 @@ Copyright © 2026 Escola Estadual Professor Antônio Dantas. Todos os direitos r
 
 Copyright © 2026 Escola Estadual Professor Antônio Dantas. All rights reserved.
 
-**1. Ownership.** This project — including its source code, texts, images, trademarks and visual identity — is for the exclusive use of Escola Estadual Professor Antônio Dantas, which holds the exploitation rights under Brazilian Law No. 9,609/1998 (Software Law) and Law No. 9,610/1998 (Copyright Law).
+**1. Ownership.** This project — including its source code, texts, images, trademarks and visual identity — was developed by Maria Isabel da Costa Paiva, Monalysa Emilly Caetano and Patrickson Adriel da Silva Moura Freitas for the exclusive use of Escola Estadual Professor Antônio Dantas, which holds the exploitation rights under Brazilian Law No. 9,609/1998 (Software Law) and Law No. 9,610/1998 (Copyright Law). The developers retain the right to be credited as the authors of the work.
 
 **2. Restrictions.** Except with the prior written authorization of the rights holder, third parties may not copy, reproduce, modify, distribute, sublicense, publish, sell or otherwise reuse, in whole or in part, the contents of this project.
 
