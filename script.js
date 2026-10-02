@@ -227,7 +227,7 @@ function renderLoading() {
 function renderSetup() {
   return `<main class="login-page">
     <header class="login-topbar">${brand()}${themeButton()}</header>
-    <section class="login-stage"><div class="login-panel"><div class="school-heading">${schoolBadge()}<p>Configuração inicial</p><h1>Conecte o banco de dados</h1><span>Abra o arquivo GUIA-RAPIDO.md e siga os passos indicados.</span></div>
+    <section class="login-stage"><div class="login-panel"><div class="school-heading">${schoolBadge()}<p>Configuração inicial</p><h1>Conecte o banco de dados</h1><span>Abra o arquivo README.md e siga os passos indicados.</span></div>
     <article class="login-card setup-card"><span class="stat-icon orange">!</span><h2>Falta conectar o Supabase</h2><p>Preencha o arquivo <strong>config.js</strong> com a URL e a chave pública do projeto.</p><div class="local-box"><span>1</span><div><strong>Você só fará isso uma vez</strong><p>Depois de configurado, esta tela desaparece.</p></div></div></article></div></section>
   </main>`;
 }
@@ -867,7 +867,7 @@ document.addEventListener("submit", async event => {
       let session = signup.data.session;
       if (!session) {
         const login = await backend.auth.signInWithPassword({ email: accountEmail(identifier), password });
-        if (login.error) throw new Error("Cadastro criado, mas a confirmação de e-mail está ativada no Supabase. Desative essa opção seguindo o GUIA-RAPIDO.md.");
+        if (login.error) throw new Error("Cadastro criado, mas a confirmação de e-mail está ativada no Supabase. Desative essa opção seguindo o README.md.");
         session = login.data.session;
       }
       ui.session = session;
