@@ -84,3 +84,20 @@ function roleLabel(role) {
   if (role === "pending") return "Aguardando aprovação";
   return ROLE_CONFIG[role]?.label || role;
 }
+
+function currentMinutesOfDay() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Fortaleza",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(new Date());
+  const hour = Number(parts.find(part => part.type === "hour").value);
+  const minute = Number(parts.find(part => part.type === "minute").value);
+  return hour * 60 + minute;
+}
+
+function isWithinOpenHours() {
+  const minutes = currentMinutesOfDay();
+  return minutes < CLOSE_MINUTE || minutes >= OPEN_MINUTE;
+}

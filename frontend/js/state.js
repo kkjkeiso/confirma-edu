@@ -6,6 +6,10 @@ const QR_PREFIX = "CONFIRMAEDU:";
 
 const THEME_KEY = "confirmaedu_theme";
 
+const CLOSE_MINUTE = 8 * 60 + 20;
+
+const OPEN_MINUTE = 15 * 60;
+
 const ROLE_CONFIG = {
   student: { label: "Aluno", identifier: "Matrícula", detail: "Aluno" },
   canteen: { label: "Cantina", identifier: "Usuário ou matrícula funcional", detail: "Equipe da cantina" },

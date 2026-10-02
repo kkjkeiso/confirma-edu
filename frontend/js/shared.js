@@ -43,8 +43,9 @@ function setButtonBusy(button, busy, text = "Aguarde…") {
 function render() {
   applyTheme();
   const app = document.getElementById("app");
-  if (ui.booting) app.innerHTML = renderLoading();
-  else if (!isConfigured) app.innerHTML = renderSetup();
+  if (!isConfigured) app.innerHTML = renderSetup();
+  else if (!isWithinOpenHours()) app.innerHTML = renderClosed();
+  else if (ui.booting) app.innerHTML = renderLoading();
   else if (!ui.session || !ui.profile) app.innerHTML = renderLogin();
   else if (ui.profile.role === "pending") app.innerHTML = renderPending();
   else app.innerHTML = renderApp();
@@ -53,6 +54,10 @@ function render() {
 
 function renderLoading() {
   return `<main class="loading-screen"><div class="brand brand-loading"><img class="brand-logo" src="frontend/assets/logo.webp" alt="ConfirmaEdu"></div><strong>Carregando o ConfirmaEdu…</strong></main>`;
+}
+
+function renderClosed() {
+  return `<main class="login-page"><header class="login-topbar">${brand()}${themeButton()}</header><section class="login-stage"><div class="login-panel"><div class="school-heading">${schoolBadge()}<p>Fora do horário</p><h1>O ConfirmaEdu está fechado</h1><span>Disponível das 15:00 às 8:20 do dia seguinte.</span></div><article class="login-card setup-card"><span class="stat-icon blue">◷</span><h2>Volte mais tarde</h2><p>O sistema reabre às 15:00.</p></article></div></section></main>`;
 }
 
 function currentUser() {

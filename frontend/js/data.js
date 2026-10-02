@@ -57,7 +57,7 @@ function subscribeRealtime() {
 }
 
 function exportCSV() {
-  const rows = [["Aluno", "Matrícula", "Turma", "Data", "Situação"], ...todayAbsences().map(person => [person.full_name, person.registration, person.classroom || "", dateKey(), "Confirmou e ainda não compareceu"])];
+  const rows = [["Aluno", "Matrícula", "Turma", "Data", "Situação"], ...recentAbsences().map(person => [person.full_name, person.registration, person.classroom || "", person.confirmation.meal_date, "Confirmou e não compareceu"])];
   const csv = rows.map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(";")).join("\n");
   const url = URL.createObjectURL(new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8" }));
   const link = document.createElement("a");

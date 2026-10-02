@@ -1,8 +1,12 @@
 "use strict";
 
-function todayAbsences() {
-  const attended = new Set(data.attendance.filter(item => item.meal_date === dateKey()).map(item => item.user_id));
-  return data.confirmations.filter(item => item.meal_date === dateKey() && item.will_eat && !attended.has(item.user_id)).map(item => ({ ...profileById(item.user_id), confirmation: item }));
+function recentAbsences(days = 30) {
+  const start = dateKey(new Date(Date.now() - days * 86400000));
+  const attended = new Set(data.attendance.map(item => `${item.user_id}|${item.meal_date}`));
+  return data.confirmations
+    .filter(item => item.will_eat && item.meal_date >= start && item.meal_date <= dateKey() && !attended.has(`${item.user_id}|${item.meal_date}`))
+    .map(item => ({ ...profileById(item.user_id), confirmation: item }))
+    .sort((a, b) => b.confirmation.meal_date.localeCompare(a.confirmation.meal_date));
 }
 
 function renderDirectionView() {
@@ -15,21 +19,21 @@ function renderDirectionView() {
 }
 
 function renderDirectionHome() {
-  const absences = todayAbsences();
+  const absences = recentAbsences();
   const pendingDocs = data.justifications.filter(item => item.status === "pending");
   const pendingStaff = data.profiles.filter(item => item.role === "pending");
   const totals = staffTotals();
-  return `<div class="page-stack">${heading("Painel da direção", "Visão geral", "Ausências, justificativas e acessos do sistema.", `<button class="button button-secondary" data-action="export-csv">⇩ Exportar</button>`)}<section class="stats-grid">${statCard("!", "orange", "Confirmaram e não chegaram", absences.length, "registros de hoje")}${statCard("▤", "blue", "Justificativas pendentes", pendingDocs.length, "documentos para análise")}${statCard("♟", "purple", "Acessos pendentes", pendingStaff.length, "funcionários aguardando")}${statCard("♨", "green", "Refeições servidas", totals.served, "hoje")}</section><section class="two-columns"><article class="card"><div class="section-head"><div><h2>Ausências de hoje</h2><p>Confirmaram e ainda não compareceram</p></div><span class="pill pill-orange">${absences.length} alunos</span></div>${absences.length ? absences.slice(0, 6).map(personRow).join("") : emptyState("✓", "Nenhuma ausência até agora", "Os registros serão atualizados automaticamente.")}<button class="button button-secondary button-small" style="margin-top:11px" data-action="navigate" data-view="ausencias">Ver lista completa →</button></article><article class="card"><div class="section-head"><div><h2>Solicitações de acesso</h2><p>Funcionários aguardando aprovação</p></div></div>${pendingStaff.length ? pendingStaff.slice(0, 5).map(staffRequestRow).join("") : emptyState("♟", "Nenhuma solicitação", "Novos cadastros da cantina e direção aparecerão aqui.")}<button class="button button-secondary button-small" style="margin-top:11px" data-action="navigate" data-view="acessos">Gerenciar acessos →</button></article></section></div>`;
+  return `<div class="page-stack">${heading("Painel da direção", "Visão geral", "Ausências, justificativas e acessos do sistema.", `<button class="button button-secondary" data-action="export-csv">⇩ Exportar</button>`)}<section class="stats-grid">${statCard("!", "orange", "Confirmaram e não chegaram", absences.length, "últimos 30 dias")}${statCard("▤", "blue", "Justificativas pendentes", pendingDocs.length, "documentos para análise")}${statCard("♟", "purple", "Acessos pendentes", pendingStaff.length, "funcionários aguardando")}${statCard("♨", "green", "Refeições servidas", totals.served, "hoje")}</section><section class="two-columns"><article class="card"><div class="section-head"><div><h2>Ausências recentes</h2><p>Confirmaram e não compareceram nos últimos 30 dias</p></div><span class="pill pill-orange">${absences.length} registros</span></div>${absences.length ? absences.slice(0, 6).map(personRow).join("") : emptyState("✓", "Nenhuma ausência até agora", "Os registros serão atualizados automaticamente.")}<button class="button button-secondary button-small" style="margin-top:11px" data-action="navigate" data-view="ausencias">Ver lista completa →</button></article><article class="card"><div class="section-head"><div><h2>Solicitações de acesso</h2><p>Funcionários aguardando aprovação</p></div></div>${pendingStaff.length ? pendingStaff.slice(0, 5).map(staffRequestRow).join("") : emptyState("♟", "Nenhuma solicitação", "Novos cadastros da cantina e direção aparecerão aqui.")}<button class="button button-secondary button-small" style="margin-top:11px" data-action="navigate" data-view="acessos">Gerenciar acessos →</button></article></section></div>`;
 }
 
 function personRow(person) {
-  return `<div class="person-row"><span class="avatar">${initialsFromName(person.full_name)}</span><div class="row-main"><strong>${escapeHTML(person.full_name || "Aluno")}</strong><small>${escapeHTML(person.classroom || "Sem turma")} • ${escapeHTML(person.registration || "")}</small></div><span class="badge badge-orange">Aguardando</span></div>`;
+  return `<div class="person-row"><span class="avatar">${initialsFromName(person.full_name)}</span><div class="row-main"><strong>${escapeHTML(person.full_name || "Aluno")}</strong><small>${escapeHTML(person.classroom || "Sem turma")} • ${escapeHTML(person.registration || "")}</small></div><span class="badge badge-orange">${formatDate(person.confirmation.meal_date, { day: "2-digit", month: "2-digit" })}</span></div>`;
 }
 
 function renderAbsences() {
   const query = ui.search.toLowerCase();
-  const items = todayAbsences().filter(person => `${person.full_name} ${person.registration} ${person.classroom}`.toLowerCase().includes(query));
-  return `<div class="page-stack">${heading("Gestão de ausências", "Confirmaram e ainda não almoçaram", "Dados de hoje atualizados pelo sistema.", `<button class="button button-primary" data-action="export-csv">⇩ CSV</button>`)}<section class="card"><form id="search-form" class="search-row"><input name="search" value="${escapeHTML(ui.search)}" placeholder="Pesquisar aluno ou turma"><button class="button button-secondary">Pesquisar</button></form>${items.length ? items.map(personRow).join("") : emptyState("✓", "Nenhum aluno encontrado", "Não há ausências com esse filtro.")}</section></div>`;
+  const items = recentAbsences().filter(person => `${person.full_name} ${person.registration} ${person.classroom}`.toLowerCase().includes(query));
+  return `<div class="page-stack">${heading("Gestão de ausências", "Confirmaram e não compareceram", "Últimos 30 dias, atualizados pelo sistema.", `<button class="button button-primary" data-action="export-csv">⇩ CSV</button>`)}<section class="card"><form id="search-form" class="search-row"><input name="search" value="${escapeHTML(ui.search)}" placeholder="Pesquisar aluno ou turma"><button class="button button-secondary">Pesquisar</button></form>${items.length ? items.map(personRow).join("") : emptyState("✓", "Nenhum aluno encontrado", "Não há ausências com esse filtro.")}</section></div>`;
 }
 
 function renderJustifications() {
