@@ -1,6 +1,3 @@
--- ConfirmaEdu — banco completo para Supabase
--- Execute este arquivo inteiro uma única vez no SQL Editor.
-
 create extension if not exists pgcrypto;
 
 create or replace function public.school_today()
@@ -513,6 +510,3 @@ begin
   end loop;
 end;
 $$;
-
--- Tudo pronto. Agora desative a confirmação de e-mail no painel de Authentication
--- e preencha apenas SUPABASE_URL e SUPABASE_KEY no arquivo config.js.
