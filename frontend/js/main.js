@@ -1,6 +1,7 @@
 "use strict";
 
 async function boot() {
+  await loadTemplates(["frontend/html/login.html"]);
   applyTheme();
   if (!isConfigured) {
     ui.booting = false;

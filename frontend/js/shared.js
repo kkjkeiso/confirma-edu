@@ -40,6 +40,28 @@ function setButtonBusy(button, busy, text = "Aguarde…") {
   }
 }
 
+async function loadTemplates(paths) {
+  for (const path of paths) {
+    const html = await fetch(path).then(response => response.text());
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    doc.querySelectorAll("template").forEach(template => document.body.appendChild(template));
+  }
+}
+
+function renderTemplate(id, slots = {}) {
+  const template = document.getElementById(id);
+  const node = template.content.cloneNode(true);
+  for (const [name, html] of Object.entries(slots)) {
+    const target = node.querySelector(`[data-slot="${name}"]`);
+    if (!target) continue;
+    target.innerHTML = html;
+    target.removeAttribute("data-slot");
+  }
+  const wrapper = document.createElement("div");
+  wrapper.appendChild(node);
+  return wrapper.innerHTML;
+}
+
 function render() {
   applyTheme();
   const app = document.getElementById("app");

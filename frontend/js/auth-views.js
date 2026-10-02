@@ -1,11 +1,10 @@
 "use strict";
 
 function renderSetup() {
-  return `<main class="login-page">
-    <header class="login-topbar">${brand()}${themeButton()}</header>
-    <section class="login-stage"><div class="login-panel"><div class="school-heading">${schoolBadge()}<p>Configuração inicial</p><h1>Conecte o banco de dados</h1><span>Abra o arquivo README.md e siga os passos indicados.</span></div>
-    <article class="login-card setup-card"><span class="stat-icon orange">!</span><h2>Falta conectar o Supabase</h2><p>Preencha o arquivo <strong>frontend/js/config.js</strong> com a URL e a chave pública do projeto.</p><div class="local-box"><span>1</span><div><strong>Você só fará isso uma vez</strong><p>Depois de configurado, esta tela desaparece.</p></div></div></article></div></section>
-  </main>`;
+  return renderTemplate("tpl-setup", {
+    topbar: brand() + themeButton(),
+    "school-badge": schoolBadge(),
+  });
 }
 
 function roleTabs(selected, action) {
@@ -38,10 +37,18 @@ function renderLogin() {
       </form>
       <button class="auth-switch" type="button" data-action="show-register">Primeiro acesso? <strong>Criar cadastro</strong></button>`;
 
-  return `<main class="login-page"><header class="login-topbar">${brand()}${themeButton()}</header><section class="login-stage"><div class="login-panel"><div class="school-heading">${schoolBadge()}<p>Escola Estadual</p><h1>Professor Antônio Dantas</h1><span>Controle de refeições escolares</span></div><div class="login-card">${cardContent}</div></div></section></main>`;
+  return renderTemplate("tpl-login", {
+    topbar: brand() + themeButton(),
+    "school-badge": schoolBadge(),
+    card: cardContent,
+  });
 }
 
 function renderPending() {
   const requested = ROLE_CONFIG[ui.profile.requested_role]?.label || "funcionário";
-  return `<main class="login-page"><header class="login-topbar">${brand()}${themeButton()}</header><section class="login-stage"><div class="login-panel pending-panel"><div class="school-heading"><span class="school-symbol">◷</span><p>Cadastro recebido</p><h1>Aguardando aprovação</h1><span>A direção precisa liberar o acesso de ${escapeHTML(requested)}.</span></div><article class="login-card pending-card"><span class="pending-icon">✓</span><h2>${escapeHTML(ui.profile.full_name)}</h2><p>Seu cadastro foi salvo corretamente. Entre novamente depois que a direção aprovar.</p><div class="profile-status"><span>◷</span><div><strong>Situação</strong><p>Aguardando aprovação da direção</p></div></div><button class="button button-secondary button-full" data-action="refresh-account">Verificar novamente</button><button class="auth-switch" data-action="logout">Sair da conta</button></article></div></section></main>`;
+  return renderTemplate("tpl-pending", {
+    topbar: brand() + themeButton(),
+    "requested-role": escapeHTML(requested),
+    "full-name": escapeHTML(ui.profile.full_name),
+  });
 }
