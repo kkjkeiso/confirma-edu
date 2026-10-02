@@ -175,11 +175,11 @@ function applyTheme() {
 }
 
 function brand() {
-  return `<div class="brand"><img class="brand-logo" src="confirmaedu-logo.png" alt="ConfirmaEdu"></div>`;
+  return `<div class="brand"><img class="brand-logo" src="assets/logo.webp" alt="ConfirmaEdu"></div>`;
 }
 
 function schoolBadge() {
-  return `<span class="school-symbol school-logo"><img src="escola-antonio-dantas.png" alt="Brasão da Escola Estadual Professor Antônio Dantas"></span>`;
+  return `<span class="school-symbol school-logo"><img src="assets/brasao-escola.webp" alt="Brasão da Escola Estadual Professor Antônio Dantas"></span>`;
 }
 
 function themeButton() {
@@ -221,7 +221,7 @@ function render() {
 }
 
 function renderLoading() {
-  return `<main class="loading-screen"><div class="brand brand-loading"><img class="brand-logo" src="confirmaedu-logo.png" alt="ConfirmaEdu"></div><strong>Carregando o ConfirmaEdu…</strong></main>`;
+  return `<main class="loading-screen"><div class="brand brand-loading"><img class="brand-logo" src="assets/logo.webp" alt="ConfirmaEdu"></div><strong>Carregando o ConfirmaEdu…</strong></main>`;
 }
 
 function renderSetup() {

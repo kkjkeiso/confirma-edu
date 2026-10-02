@@ -16,8 +16,9 @@ Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o `
 ├── supabase.js                 Cliente oficial do Supabase (vendorizado)
 ├── qrcode.js                   Geração do QR Code do dia (vendorizado)
 ├── jsQR.js                     Leitura do QR Code pela câmera (vendorizado)
-├── confirmaedu-logo.png        Logo do app
-├── escola-antonio-dantas.png   Identidade visual da escola
+├── assets/
+│   ├── logo.webp                Logo do ConfirmaEdu
+│   └── brasao-escola.webp       Brasão da Escola Estadual Professor Antônio Dantas
 ├── LICENSE.md                  Licença proprietária (português prevalece, com tradução em inglês)
 └── README.md
 ```
@@ -60,8 +61,9 @@ Everything is plain HTML, CSS and JavaScript, with no framework and no build ste
 ├── supabase.js                 Official Supabase client (vendored)
 ├── qrcode.js                   Generates the day's QR Code (vendored)
 ├── jsQR.js                     Reads the QR Code via the camera (vendored)
-├── confirmaedu-logo.png        App logo
-├── escola-antonio-dantas.png   The school's visual identity
+├── assets/
+│   ├── logo.webp                ConfirmaEdu logo
+│   └── brasao-escola.webp       Escola Estadual Professor Antônio Dantas crest
 ├── LICENSE.md                  Proprietary license (Portuguese prevails, English translation)
 └── README.md
 ```
