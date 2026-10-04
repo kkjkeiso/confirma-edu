@@ -44,17 +44,27 @@ Tudo é HTML, CSS e JavaScript puros, sem framework e sem etapa de build — o `
 
 ## Como ligar
 
-1. Crie um projeto em [supabase.com](https://supabase.com) (conta grátis).
-2. Abra **SQL Editor → New query**, cole todo o conteúdo de `backend/database.sql` e clique em **Run**. Isso cria as tabelas, as funções, as políticas de RLS e o bucket de justificativas de uma vez só.
-3. Em **Authentication → Sign In / Providers → Email**, desmarque **Confirm email** — o login aqui é por matrícula, não por e-mail real.
-4. Em **Project Settings → Data API**, copie a **Project URL** e a chave **anon / public** e cole em `frontend/js/config.js`:
+1. Acesse [supabase.com](https://supabase.com) e clique em **Start your project** (canto superior direito).
+2. Crie sua conta — pode ser com GitHub, Google ou e-mail e senha. Se usar e-mail, confirme pelo link que chegar na sua caixa de entrada.
+3. Na primeira vez, o Supabase pede para criar uma **organização**: dê qualquer nome (ex.: o seu nome ou "ConfirmaEdu"), deixe o tipo como **Personal** e o plano como **Free**, e clique em **Create organization**.
+4. Clique em **New project**. Preencha:
+   - **Project name**: qualquer nome, ex. `confirma-edu`.
+   - **Database Password**: gere uma senha forte (o próprio Supabase tem um botão **Generate a password**) e guarde em um lugar seguro — ela não é usada neste projeto, mas o Supabase exige.
+   - **Region**: escolha a mais próxima (ex. `South America (São Paulo)`).
+   Clique em **Create new project** e aguarde cerca de 1-2 minutos enquanto ele é provisionado.
+5. Com o projeto pronto, no menu lateral esquerdo clique no ícone de banco de dados **SQL Editor**. Clique em **New query**, abra o arquivo `backend/database.sql` deste repositório, copie todo o conteúdo, cole no editor e clique em **Run** (ou `Ctrl+Enter`). Isso cria todas as tabelas, funções, políticas de RLS e o bucket de justificativas de uma vez só. Se aparecer "Success. No rows returned", deu certo.
+6. Ainda no menu lateral, clique no ícone de cadeado **Authentication**. Na aba **Sign In / Providers**, clique em **Email** para expandir as opções e desmarque **Confirm email**. Clique em **Save** no final do painel — o login deste sistema é por matrícula, não por e-mail real, então essa confirmação precisa ficar desligada.
+7. No menu lateral, clique no ícone de engrenagem **Project Settings** (geralmente no fim da lista) e depois em **Data API**. Nessa página você vai ver:
+   - **Project URL**: copie esse valor inteiro (começa com `https://` e termina em `.supabase.co`).
+   - Mais abaixo, a seção **Project API Keys**: copie a chave marcada como **anon** / **public** (ou **publishable**, nas contas mais novas do Supabase — começa com `sb_publishable_`).
+8. Abra o arquivo `frontend/js/config.js` deste repositório e cole os dois valores:
    ```js
    window.CONFIRMAEDU_CONFIG = {
      SUPABASE_URL: "https://seu-projeto.supabase.co",
      SUPABASE_KEY: "sua-chave-publica-aqui",
    };
    ```
-5. Abra o `index.html` (ou publique os arquivos em qualquer host estático) e cadastre-se escolhendo o perfil **Direção**. Como ainda não existe nenhuma direção cadastrada, o próprio sistema libera esse primeiro acesso automaticamente. A partir daí, use o painel **Acessos** para aprovar a cantina e os próximos funcionários.
+9. Abra o `index.html` (duplo clique nele, ou publique os arquivos em qualquer host estático) e cadastre-se escolhendo o perfil **Direção**. Como ainda não existe nenhuma direção cadastrada, o próprio sistema libera esse primeiro acesso automaticamente. A partir daí, use o painel **Acessos** para aprovar a cantina e os próximos funcionários.
 
 Essa chave do Supabase é pública por natureza, feita para rodar no navegador — a segurança de verdade está nas políticas de RLS criadas pelo `backend/database.sql`.
 
@@ -108,17 +118,27 @@ Everything is plain HTML, CSS and JavaScript, with no framework and no build ste
 
 ## Getting it running
 
-1. Create a project at [supabase.com](https://supabase.com) (free tier works).
-2. Open **SQL Editor → New query**, paste the full contents of `backend/database.sql` and click **Run**. This creates every table, function, RLS policy and the justifications storage bucket in one shot.
-3. Under **Authentication → Sign In / Providers → Email**, uncheck **Confirm email** — login here uses a registration number, not a real e-mail address.
-4. Under **Project Settings → Data API**, copy the **Project URL** and the **anon / public** key into `frontend/js/config.js`:
+1. Go to [supabase.com](https://supabase.com) and click **Start your project** (top right corner).
+2. Create an account — with GitHub, Google, or email and password. If you use email, confirm it through the link sent to your inbox.
+3. The first time, Supabase asks you to create an **organization**: give it any name (e.g. your own name or "ConfirmaEdu"), leave the type as **Personal** and the plan as **Free**, then click **Create organization**.
+4. Click **New project**. Fill in:
+   - **Project name**: any name, e.g. `confirma-edu`.
+   - **Database Password**: generate a strong password (there's a **Generate a password** button) and keep it somewhere safe — it isn't used by this project, but Supabase requires one.
+   - **Region**: pick the closest one to you.
+   Click **Create new project** and wait about 1-2 minutes while it's provisioned.
+5. Once the project is ready, click the database icon **SQL Editor** in the left sidebar. Click **New query**, open the `backend/database.sql` file from this repository, copy its entire contents, paste it into the editor, and click **Run** (or `Ctrl+Enter`). This creates every table, function, RLS policy and the justifications storage bucket in one shot. "Success. No rows returned" means it worked.
+6. Still in the left sidebar, click the lock icon **Authentication**. Under the **Sign In / Providers** tab, click **Email** to expand its options and uncheck **Confirm email**. Click **Save** at the bottom of the panel — login in this system uses a registration number, not a real email address, so this confirmation step needs to stay off.
+7. In the left sidebar, click the gear icon **Project Settings** (usually near the bottom of the list), then **Data API**. On that page you'll find:
+   - **Project URL**: copy the full value (starts with `https://` and ends in `.supabase.co`).
+   - Further down, the **Project API Keys** section: copy the key labeled **anon** / **public** (or **publishable** on newer Supabase accounts — it starts with `sb_publishable_`).
+8. Open this repository's `frontend/js/config.js` file and paste both values in:
    ```js
    window.CONFIRMAEDU_CONFIG = {
      SUPABASE_URL: "https://your-project.supabase.co",
      SUPABASE_KEY: "your-public-key-here",
    };
    ```
-5. Open `index.html` (or publish the files on any static host) and sign up choosing the **Direção** (direction) role. Since no direction account exists yet, the system grants that first access automatically. From there, use the **Acessos** (access) panel to approve the canteen and the next staff accounts.
+9. Open `index.html` (double-click it, or publish the files on any static host) and sign up choosing the **Direção** (direction) role. Since no direction account exists yet, the system grants that first access automatically. From there, use the **Acessos** (access) panel to approve the canteen and the next staff accounts.
 
 That Supabase key is public by design, meant to run in the browser — the real security lives in the RLS policies created by `backend/database.sql`.
 
