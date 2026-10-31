@@ -31,7 +31,7 @@ const NAVIGATION = {
   ],
   canteen: [
     { id: "inicio", icon: "⌂", label: "Visão geral" },
-    { id: "turmas", icon: "▦", label: "Alunos e turmas" },
+    { id: "relatorios", icon: "▥", label: "Relatórios" },
     { id: "registrar", icon: "▦", label: "QR Code" },
     { id: "cardapio", icon: "☷", label: "Cardápio" },
   ],
@@ -42,7 +42,7 @@ const NAVIGATION = {
     { id: "turmas", icon: "▦", label: "Turmas" },
     { id: "cardapio", icon: "☷", label: "Cardápio" },
     { id: "acessos", icon: "♟", label: "Acessos" },
-    { id: "relatorios", icon: "▥", label: "Relatórios" },
+    { id: "alunos", icon: "▦", label: "Alunos e turmas" },
   ],
 };
 
