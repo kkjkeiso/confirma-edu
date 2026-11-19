@@ -39,5 +39,5 @@ function watchOpenHours() {
   }, 30000);
 }
 
-watchOpenHours();
+// watchOpenHours();
 boot();

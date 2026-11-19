@@ -44,7 +44,7 @@ function render() {
   applyTheme();
   const app = document.getElementById("app");
   if (!isConfigured) app.innerHTML = renderSetup();
-  else if (!isWithinOpenHours()) app.innerHTML = renderClosed();
+  // else if (!isWithinOpenHours()) app.innerHTML = renderClosed();
   else if (ui.booting) app.innerHTML = renderLoading();
   else if (!ui.session || !ui.profile) app.innerHTML = renderLogin();
   else if (ui.profile.role === "pending") app.innerHTML = renderPending();
