@@ -4,7 +4,7 @@ function recentAbsences(days = 30) {
   const start = dateKey(new Date(Date.now() - days * 86400000));
   const attended = new Set(data.attendance.map(item => `${item.user_id}|${item.meal_date}`));
   return data.confirmations
-    .filter(item => item.will_eat && item.meal_date >= start && item.meal_date <= dateKey() && !attended.has(`${item.user_id}|${item.meal_date}`))
+    .filter(item => item.will_eat && item.meal_date >= start && item.meal_date <= dateKey() && !isWeekend(item.meal_date) && !attended.has(`${item.user_id}|${item.meal_date}`))
     .map(item => ({ ...profileById(item.user_id), confirmation: item }))
     .sort((a, b) => b.confirmation.meal_date.localeCompare(a.confirmation.meal_date));
 }

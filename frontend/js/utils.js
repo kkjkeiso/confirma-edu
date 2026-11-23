@@ -26,8 +26,8 @@ function schoolHour() {
   return Number(new Intl.DateTimeFormat("en-US", { timeZone: "America/Fortaleza", hour: "2-digit", hourCycle: "h23" }).format(new Date()));
 }
 
-function isWeekend() {
-  return [0, 6].includes(parseDate(dateKey()).getUTCDay());
+function isWeekend(value = dateKey()) {
+  return [0, 6].includes(parseDate(value).getUTCDay());
 }
 
 function mealDateKey() {
