@@ -45,7 +45,7 @@ document.addEventListener("click", async event => {
     if (action === "refresh-data") { setButtonBusy(button, true); await refreshData(); return; }
     if (action === "attendance") {
       setButtonBusy(button, true);
-      const { error } = await backend.from("meal_confirmations").upsert({ user_id: ui.profile.id, meal_date: dateKey(), will_eat: button.dataset.value === "yes", updated_at: new Date().toISOString() }, { onConflict: "user_id,meal_date" });
+      const { error } = await backend.from("meal_confirmations").upsert({ user_id: ui.profile.id, meal_date: mealDateKey(), will_eat: button.dataset.value === "yes", updated_at: new Date().toISOString() }, { onConflict: "user_id,meal_date" });
       if (error) throw error;
       await refreshData(false);
       showToast(button.dataset.value === "yes" ? "Almoço confirmado." : "A cantina recebeu que você não irá almoçar.");

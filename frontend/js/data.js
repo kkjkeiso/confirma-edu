@@ -26,7 +26,7 @@ async function refreshData(showMessage = true) {
   const end = dateKey();
   const requests = [
     backend.from("profiles").select("*").order("full_name"),
-    backend.from("meal_confirmations").select("*").gte("meal_date", start).lte("meal_date", end).order("meal_date", { ascending: false }),
+    backend.from("meal_confirmations").select("*").gte("meal_date", start).lte("meal_date", mealDateKey()).order("meal_date", { ascending: false }),
     backend.from("attendance").select("*").gte("meal_date", start).lte("meal_date", end).order("checked_in_at", { ascending: false }),
     backend.from("weekly_menu").select("*").gte("menu_date", weekDates()[0]).lte("menu_date", weekDates()[4]).order("menu_date"),
     backend.from("justifications").select("*").order("created_at", { ascending: false }),

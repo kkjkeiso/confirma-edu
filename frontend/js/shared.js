@@ -101,6 +101,10 @@ function todayConfirmation(userId = ui.profile.id) {
   return data.confirmations.find(item => item.user_id === userId && item.meal_date === dateKey());
 }
 
+function mealConfirmation(userId = ui.profile.id) {
+  return data.confirmations.find(item => item.user_id === userId && item.meal_date === mealDateKey());
+}
+
 function todayAttendance(userId = ui.profile.id) {
   return data.attendance.find(item => item.user_id === userId && item.meal_date === dateKey());
 }

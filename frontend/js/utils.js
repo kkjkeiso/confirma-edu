@@ -22,6 +22,12 @@ function dateKey(value = new Date()) {
   }).format(value);
 }
 
+function mealDateKey() {
+  const today = parseDate(dateKey());
+  const skip = { 6: 2, 0: 1 }[today.getUTCDay()] || 0;
+  return dateKey(new Date(today.getTime() + skip * 86400000));
+}
+
 function parseDate(value) {
   return new Date(`${value}T12:00:00-03:00`);
 }

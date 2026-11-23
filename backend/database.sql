@@ -8,6 +8,18 @@ as $$
   select (now() at time zone 'America/Fortaleza')::date;
 $$;
 
+create or replace function public.next_meal_day()
+returns date
+language sql
+stable
+as $$
+  select case extract(isodow from public.school_today())
+    when 6 then public.school_today() + 2
+    when 7 then public.school_today() + 1
+    else public.school_today()
+  end;
+$$;
+
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   full_name text not null check (char_length(full_name) between 3 and 120),
@@ -378,7 +390,7 @@ create policy "confirmations_insert" on public.meal_confirmations for insert to 
 with check (
   user_id = auth.uid()
   and public.current_app_role() = 'student'
-  and meal_date = public.school_today()
+  and meal_date = public.next_meal_day()
 );
 
 drop policy if exists "confirmations_update" on public.meal_confirmations;
@@ -387,7 +399,7 @@ using (user_id = auth.uid() and public.current_app_role() = 'student')
 with check (
   user_id = auth.uid()
   and public.current_app_role() = 'student'
-  and meal_date = public.school_today()
+  and meal_date = public.next_meal_day()
 );
 
 drop policy if exists "attendance_select" on public.attendance;
