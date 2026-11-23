@@ -13,11 +13,13 @@ returns date
 language sql
 stable
 as $$
-  select case extract(isodow from public.school_today())
-    when 6 then public.school_today() + 2
-    when 7 then public.school_today() + 1
-    else public.school_today()
-  end;
+  select case
+    when extract(isodow from local_now) = 5 and local_now::time >= '12:00' then local_now::date + 3
+    when extract(isodow from local_now) = 6 then local_now::date + 2
+    when extract(isodow from local_now) = 7 then local_now::date + 1
+    else local_now::date
+  end
+  from (select now() at time zone 'America/Fortaleza' as local_now) as clock;
 $$;
 
 create table if not exists public.profiles (

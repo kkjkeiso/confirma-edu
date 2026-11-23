@@ -22,9 +22,18 @@ function dateKey(value = new Date()) {
   }).format(value);
 }
 
+function schoolHour() {
+  return Number(new Intl.DateTimeFormat("en-US", { timeZone: "America/Fortaleza", hour: "2-digit", hourCycle: "h23" }).format(new Date()));
+}
+
+function isWeekend() {
+  return [0, 6].includes(parseDate(dateKey()).getUTCDay());
+}
+
 function mealDateKey() {
   const today = parseDate(dateKey());
-  const skip = { 6: 2, 0: 1 }[today.getUTCDay()] || 0;
+  const weekday = today.getUTCDay();
+  const skip = weekday === 5 && schoolHour() >= 12 ? 3 : { 6: 2, 0: 1 }[weekday] || 0;
   return dateKey(new Date(today.getTime() + skip * 86400000));
 }
 
